@@ -22,12 +22,36 @@ public class QuoteApplication {
                 "The desire for more positive experience is itself a negative experience. And, paradoxically, the acceptance of one's negative experience is itself a positive experience - Mark Manson"
         ));
 
-        System.out.println("select a number between 1 and 10");
-        int userInput = Integer.parseInt(myScanner.nextLine()) - 1;
+        String userInput;
+        int command;
 
-        System.out.println(myVar.get(userInput));
+        do {
+            System.out.println("select a number between 1 and 10");
+            String input = myScanner.nextLine();
 
+            try {
+                command = Integer.parseInt(input) - 1;
 
+                if (command < 0 || command >= myVar.size()) {
+                    System.out.println("Invalid range. Try again.");
+                    continue; // <--- Jumps back to "select a number..."
+                }
 
+                System.out.println(myVar.get(command));
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid format. Please enter a number.");
+                continue; // <--- Jumps back to "select a number..."
+            }
+
+            // Only reached if we successfully printed a quote
+            System.out.println("Would You like to see another quote? Y/n");
+            userInput = myScanner.nextLine().toLowerCase();
+
+            if (userInput.length() > 0 && userInput.charAt(0) == 'n') {
+                System.out.println("ok... Then...");
+                break;
+            }
+        } while (true);
     }
 }
